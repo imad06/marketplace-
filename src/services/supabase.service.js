@@ -55,10 +55,52 @@ class SupabaseService {
 
             console.log('User record inserted successfully:', insertedUser);
 
+            // 3. Créer la boutique initiale si fournie
+            let shops = [];
+            const { shop_name, shop_type = [] } = userData;
+
+            if (shop_name) {
+                console.log('Creating initial shop:', shop_name);
+                const { data: shop, error: shopError } = await supabase
+                    .from('stores')
+                    .insert([{
+                        owner_id: authData.user.id,
+                        name: shop_name,
+                        description: `Boutique de ${name}`
+                    }])
+                    .select()
+                    .single();
+
+                if (shopError) {
+                    console.error('Initial shop creation error:', shopError);
+                    // On ne bloque pas tout le processus si la boutique échoue
+                } else if (shop) {
+                    // 4. Créer les relations store_types
+                    if (shop_type.length > 0) {
+                        const storeTypeRelations = shop_type.map(typeId => ({
+                            store_id: shop.id,
+                            store_type_id: parseInt(typeId)
+                        }));
+
+                        await supabase.from('store_store_types').insert(storeTypeRelations);
+                    }
+
+                    // Récupérer la boutique complète avec ses types
+                    const { data: fullShop } = await supabase
+                        .from('stores')
+                        .select('*, store_store_types(*, store_types(*))')
+                        .eq('id', shop.id)
+                        .single();
+
+                    shops = [fullShop || shop];
+                }
+            }
+
             return {
                 success: true,
                 data: {
-                    user: authData.user,
+                    user: insertedUser || authData.user,
+                    shops,
                     session: authData.session
                 }
             };

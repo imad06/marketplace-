@@ -222,9 +222,17 @@ export const AuthProvider = ({ children }) => {
         // Marquer qu'on vient de s'inscrire
         justLoggedInRef.current = true;
 
-        setUser(response.data.user);
-        setShops([]);
-        setCurrentShop(null);
+        const { user: userData, shops: userShops } = response.data;
+        setUser(userData);
+        setShops(userShops || []);
+
+        if (userShops && userShops.length > 0) {
+          setCurrentShop(userShops[0]);
+          localStorage.setItem('selectedShopId', userShops[0].id);
+        } else {
+          setCurrentShop(null);
+        }
+
         setIsAuthenticated(true);
         setLoading(false);
 
