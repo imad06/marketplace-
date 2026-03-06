@@ -20,7 +20,6 @@
     "submit": "Soumettre",
     "send": "Envoyer"
   },
-  
   "auth": {
     "login": "Connexion",
     "signup": "Inscription",
@@ -40,7 +39,6 @@
     "forgotPassword": "Mot de passe oublié ?",
     "rememberMe": "Se souvenir de moi"
   },
-  
   "nav": {
     "dashboard": "Tableau de bord",
     "products": "Mes produits",
@@ -51,7 +49,6 @@
     "support": "Support",
     "profile": "Mon profil"
   },
-  
   "dashboard": {
     "welcome": "Bienvenue sur votre tableau de bord",
     "revenueTotal": "Revenu Total",
@@ -66,7 +63,6 @@
     "viewStats": "Voir les statistiques",
     "orderDistribution": "Répartition des commandes"
   },
-  
   "products": {
     "title": "Mes produits",
     "subtitle": "Gérez votre catalogue de produits",
@@ -100,7 +96,6 @@
     "maxImages": "Maximum 5 images par produit",
     "imageFormat": "PNG, JPG, GIF (max. 5MB)"
   },
-  
   "orders": {
     "title": "Mes commandes",
     "subtitle": "Suivez et gérez toutes vos commandes",
@@ -118,7 +113,7 @@
     "cancelled": "Annulée",
     "customerInfo": "Informations client",
     "shippingAddress": "Adresse de livraison",
-    "orderedItems": "Articles commandés",
+    "orderedItems": "sous-catégories commandés",
     "quantity": "Quantité",
     "subtotal": "Sous-total",
     "shipping": "Frais de livraison",
@@ -132,7 +127,6 @@
     "noOrders": "Aucune commande pour le moment",
     "searchOrders": "Rechercher par n° de commande, client..."
   },
-  
   "statistics": {
     "title": "Statistiques",
     "subtitle": "Analysez les performances de votre boutique",
@@ -156,7 +150,6 @@
     "last30days": "30 derniers jours",
     "thisYear": "Cette année"
   },
-  
   "messages": {
     "title": "Messages & Support",
     "subtitle": "Gérez vos demandes de support",
@@ -184,7 +177,6 @@
     "sendMessage": "Envoyer le message",
     "describeRequest": "Décrivez votre demande en détail..."
   },
-  
   "settings": {
     "title": "Paramètres",
     "subtitle": "Gérez les paramètres de votre compte",
@@ -204,7 +196,6 @@
     "english": "English",
     "arabic": "العربية"
   },
-  
   "notifications": {
     "title": "Notifications",
     "noNotifications": "Aucune notification",
@@ -217,7 +208,6 @@
     "all": "Toutes",
     "unread": "Non lues"
   },
-  
   "errors": {
     "required": "Ce champ est obligatoire",
     "invalidEmail": "Email invalide",
@@ -229,7 +219,6 @@
     "notFound": "Non trouvé",
     "serverError": "Erreur serveur"
   },
-  
   "success": {
     "saved": "Enregistré avec succès",
     "created": "Créé avec succès",
@@ -237,7 +226,6 @@
     "deleted": "Supprimé avec succès",
     "sent": "Envoyé avec succès"
   },
-  
   "validation": {
     "minLength": "Minimum {{count}} caractères",
     "maxLength": "Maximum {{count}} caractères",

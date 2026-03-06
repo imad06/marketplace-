@@ -121,9 +121,9 @@ const OrderDetail = ({ order, onClose, onUpdateStatus }) => {
             </div>
           </div>
 
-          {/* Articles commandés */}
+          {/* sous-catégories commandés */}
           <div>
-            <h3 className="font-semibold text-gray-800 dark:text-white mb-4 text-lg">Articles commandés</h3>
+            <h3 className="font-semibold text-gray-800 dark:text-white mb-4 text-lg">sous-catégories commandés</h3>
             <div className="space-y-3">
               {order.items && order.items.length > 0 ? (
                 order.items.map((item, idx) => (
@@ -154,7 +154,7 @@ const OrderDetail = ({ order, onClose, onUpdateStatus }) => {
                 ))
               ) : (
                 <div className="text-center py-8 text-gray-500 dark:text-gray-400">
-                  Aucun article dans cette commande
+                  Aucun sous-catégorie dans cette commande
                 </div>
               )}
             </div>

@@ -164,7 +164,7 @@ const ProductDetailModal = ({ product, onClose, onEdit }) => {
                           <React.Fragment key={index}>
                             <div className="flex flex-col">
                               <span className="text-[8px] text-gray-400 dark:text-gray-500 font-black uppercase tracking-tighter mb-0.5">
-                                {index === 0 ? 'Type' : index === 1 ? 'Famille' : 'Article'}
+                                {index === 0 ? 'Type' : index === 1 ? 'catégorie' : 'sous-catégorie'}
                               </span>
                               <span className="px-2.5 py-1 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 text-xs font-bold rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm">
                                 {part}

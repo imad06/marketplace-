@@ -392,7 +392,7 @@ const ProductForm = ({ product, onSubmit, onCancel, loading }) => {
                 <div className="grid grid-cols-1 gap-3 p-3 bg-gray-50 dark:bg-gray-800/50 rounded-xl border border-gray-100 dark:border-gray-800">
                   {/* Niveau 1: Type */}
                   <div className="space-y-1">
-                    <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">Genre / Type</label>
+                    <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">Genre</label>
                     <select
                       value={selection.typeId}
                       onChange={(e) => handleSelectionChange('typeId', e.target.value)}
@@ -416,7 +416,7 @@ const ProductForm = ({ product, onSubmit, onCancel, loading }) => {
                   {/* Niveau 2: Groupe */}
                   {selection.typeId && (
                     <div className="space-y-1 animate-slide-down">
-                      <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">Famille</label>
+                      <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">catégorie</label>
                       <select
                         value={selection.groupId}
                         onChange={(e) => handleSelectionChange('groupId', e.target.value)}
@@ -440,7 +440,7 @@ const ProductForm = ({ product, onSubmit, onCancel, loading }) => {
                   {/* Niveau 3: Item */}
                   {selection.groupId && (
                     <div className="space-y-1 animate-slide-down">
-                      <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">Article</label>
+                      <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">sous-catégorie</label>
                       <select
                         value={selection.itemId}
                         onChange={(e) => handleSelectionChange('itemId', e.target.value)}
