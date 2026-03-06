@@ -608,14 +608,15 @@ class SupabaseService {
             const stock = parseInt(formData.get('stock_quantity'));
             const imageFiles = formData.getAll('images');
 
-            // 1. Créer le produit
+            // 1. Créer le produit (avec le prix pour compatibilité app mobile)
             const { data: product, error: productError } = await supabase
                 .from('products')
                 .insert([{
                     store_id: shopId,
                     name,
                     description,
-                    category_id,
+                    price,
+                    category_id: category_id || null,
                     seo_title: name,
                     seo_description: description
                 }])
@@ -647,12 +648,12 @@ class SupabaseService {
                 const imageData = await uploadImage(file, fileName);
                 const publicUrl = getPublicImageUrl(imageData.path);
 
-                // Créer l'entrée dans product_images
+                // Créer l'entrée dans product_images (URL publique complète)
                 const { error: imageError } = await supabase
                     .from('product_images')
                     .insert([{
                         product_id: product.id,
-                        url: imageData.path
+                        url: publicUrl
                     }]);
 
                 if (imageError) throw imageError;
@@ -688,13 +689,14 @@ class SupabaseService {
             const stock = parseInt(formData.get('stock_quantity'));
             const newImageFiles = formData.getAll('images');
 
-            // 1. Mettre à jour le produit
+            // 1. Mettre à jour le produit (avec le prix pour compatibilité app mobile)
             const { data: product, error: productError } = await supabase
                 .from('products')
                 .update({
                     name,
                     description,
-                    category_id,
+                    price,
+                    category_id: category_id || null,
                     seo_title: name,
                     seo_description: description,
                     updated_at: new Date().toISOString()
@@ -731,7 +733,14 @@ class SupabaseService {
 
             if (oldImages) {
                 for (const img of oldImages) {
-                    await deleteImage(img.url);
+                    // Extraire le chemin relatif si URL complète
+                    let storagePath = img.url;
+                    if (img.url && img.url.startsWith('http')) {
+                        const marker = '/product-images/';
+                        const idx = img.url.indexOf(marker);
+                        if (idx !== -1) storagePath = img.url.substring(idx + marker.length);
+                    }
+                    await deleteImage(storagePath);
                 }
             }
 
@@ -753,7 +762,7 @@ class SupabaseService {
                     .from('product_images')
                     .insert([{
                         product_id: id,
-                        url: imageData.path
+                        url: publicUrl
                     }]);
 
                 imageUrls.push(publicUrl);
@@ -785,7 +794,14 @@ class SupabaseService {
 
             if (images) {
                 for (const img of images) {
-                    await deleteImage(img.url);
+                    // Extraire le chemin relatif si URL complète
+                    let storagePath = img.url;
+                    if (img.url && img.url.startsWith('http')) {
+                        const marker = '/product-images/';
+                        const idx = img.url.indexOf(marker);
+                        if (idx !== -1) storagePath = img.url.substring(idx + marker.length);
+                    }
+                    await deleteImage(storagePath);
                 }
             }
 
