@@ -2,7 +2,6 @@
 import React from 'react';
 import { Edit, Trash2, Eye } from 'lucide-react';
 import { formatPrice } from '../../utils/helpers';
-import Button from '../common/Button';
 import { getPublicImageUrl } from '../../config/supabase.config';
 
 const ProductCard = ({ product, onEdit, onDelete, onView }) => {
