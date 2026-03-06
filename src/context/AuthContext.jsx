@@ -108,6 +108,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     console.log('AuthProvider mounted, checking auth');
     checkAuth();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Exécuter une seule fois
 
   // Listener pour les changements d'authentification (stable)

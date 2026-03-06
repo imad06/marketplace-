@@ -505,18 +505,19 @@ class SupabaseService {
                     const leaf = this.categoriesCache.find(c => c.id === product.category_id);
                     if (leaf) {
                         const path = [leaf.name];
-                        let current = leaf;
-                        while (current?.parent_id) {
-                            const parent = this.categoriesCache.find(c => c.id === current.parent_id);
+                        let node = leaf;
+                        while (node && node.parent_id) {
+                            const parentId = node.parent_id;
+                            const parent = this.categoriesCache.find(c => c.id === parentId);
                             if (parent) {
                                 path.unshift(parent.name);
-                                current = parent;
+                                node = parent;
                             } else {
                                 break;
                             }
                         }
                         // Ajouter le store type au début
-                        const storeTypeLabel = STORE_TYPE_LABELS[current?.store_type_id] || '';
+                        const storeTypeLabel = STORE_TYPE_LABELS[node ? node.store_type_id : ''] || '';
                         if (storeTypeLabel) path.unshift(storeTypeLabel);
                         fullCategory = path.join(' > ');
                     }
@@ -567,17 +568,18 @@ class SupabaseService {
                 const leaf = this.categoriesCache.find(c => c.id === data.category_id);
                 if (leaf) {
                     const path = [leaf.name];
-                    let current = leaf;
-                    while (current?.parent_id) {
-                        const parent = this.categoriesCache.find(c => c.id === current.parent_id);
+                    let node = leaf;
+                    while (node && node.parent_id) {
+                        const parentId = node.parent_id;
+                        const parent = this.categoriesCache.find(c => c.id === parentId);
                         if (parent) {
                             path.unshift(parent.name);
-                            current = parent;
+                            node = parent;
                         } else {
                             break;
                         }
                     }
-                    const storeTypeLabel = STORE_TYPE_LABELS[current?.store_type_id] || '';
+                    const storeTypeLabel = STORE_TYPE_LABELS[node ? node.store_type_id : ''] || '';
                     if (storeTypeLabel) path.unshift(storeTypeLabel);
                     fullCategory = path.join(' > ');
                 }
