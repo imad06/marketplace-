@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import Button from '../common/Button';
 import Input from '../common/Input';
 import LoadingSpinner from '../common/LoadingSpinner';
 import { Store } from 'lucide-react';
-
+import './Auth.css';
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -35,18 +35,22 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-950 flex items-center justify-center p-4">
-      <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl w-full max-w-md p-8 border border-white/20 dark:border-gray-800">
+    <div className="auth-root">
+      {/* Animated Blobs */}
+      <div className="auth-blob auth-blob--1"></div>
+      <div className="auth-blob auth-blob--2"></div>
+
+      <div className="auth-card">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-600 rounded-full mb-4">
-            <Store className="w-8 h-8 text-white" />
+          <div className="auth-icon-wrapper">
+            <Store className="w-8 h-8" />
           </div>
-          <h2 className="text-3xl font-bold text-gray-800 dark:text-white">Connexion</h2>
-          <p className="text-gray-600 dark:text-gray-400 mt-2">Accédez à votre espace vendeur</p>
+          <h2 className="auth-title">Bon retour !</h2>
+          <p className="auth-subtitle">Accédez à votre espace vendeur</p>
         </div>
 
         {error && (
-          <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 px-4 py-3 rounded-lg mb-4">
+          <div className="auth-error">
             {error}
           </div>
         )}
@@ -74,20 +78,19 @@ const LoginForm = () => {
 
           <Button
             type="submit"
-            variant="primary"
-            className="w-full"
+            className="auth-btn mt-4"
             disabled={loading}
           >
             {loading ? <LoadingSpinner size="sm" /> : 'Se connecter'}
           </Button>
         </form>
 
-        <div className="mt-6 text-center">
-          <p className="text-gray-600 dark:text-gray-400">
+        <div className="mt-8 text-center">
+          <p className="text-[#9ea3c8] text-sm">
             Pas encore de compte ?{' '}
-            <a href="/register" className="text-primary-600 dark:text-primary-400 font-semibold hover:text-primary-700 dark:hover:text-primary-300">
-              S'inscrire
-            </a>
+            <Link to="/register" className="auth-link">
+              Créer ma boutique
+            </Link>
           </p>
         </div>
       </div>

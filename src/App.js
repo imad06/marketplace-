@@ -6,6 +6,7 @@ import { useAuth } from './hooks/useAuth';
 import DashboardLayout from './components/dashboard/DashboardLayout';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
+import HomePage from './pages/HomePage';
 import DashboardPage from './pages/DashboardPage';
 import ProductsPage from './pages/ProductsPage';
 import OrdersPage from './pages/OrdersPage';
@@ -26,7 +27,7 @@ const PrivateRoute = ({ children }) => {
     );
   }
 
-  return isAuthenticated ? children : <Navigate to="/login" />;
+  return isAuthenticated ? children : <Navigate to="/home" />;
 };
 
 const PublicRoute = ({ children }) => {
@@ -52,6 +53,9 @@ function App() {
 
 
           <Routes>
+            {/* Public landing page */}
+            <Route path="/home" element={<HomePage />} />
+
             <Route
               path="/login"
               element={

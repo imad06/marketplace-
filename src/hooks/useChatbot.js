@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 /**
- * Custom hook to integrate SaaS Chatbot into React application
+ * Custom hook to integrate SaaS Chatbot into Marketplacelication
  * 
  * @param {Object} config - Chatbot configuration
  * @param {string} config.apiKey - Your API key from the chatbot dashboard
