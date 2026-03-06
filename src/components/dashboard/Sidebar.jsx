@@ -10,13 +10,16 @@ import {
   Settings,
   HelpCircle,
   Store,
+  ChevronDown,
   Menu,
   X
 } from 'lucide-react';
+import { useAuth } from '../../hooks/useAuth';
 import ShopSwitcher from './ShopSwitcher';
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
   const { t } = useTranslation();
+  const { user } = useAuth();
 
   const menuItems = [
     { path: '/dashboard', label: t('nav.dashboard'), icon: LayoutDashboard },

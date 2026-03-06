@@ -6,7 +6,24 @@ class SupabaseService {
     constructor() {
         this.categoriesCache = [];
     }
-    // ==================== AUTH ====================
+
+    /**
+     * Nettoie un nom de fichier pour éviter les erreurs "Invalid key" dans Supabase Storage.
+     * Supprime les accents, espaces, parenthèses et autres caractères spéciaux.
+     */
+    sanitizeFileName(fileName) {
+        if (!fileName) return `file_${Date.now()}`;
+        const lastDotIndex = fileName.lastIndexOf('.');
+        let name = lastDotIndex !== -1 ? fileName.substring(0, lastDotIndex) : fileName;
+        const ext = lastDotIndex !== -1 ? fileName.substring(lastDotIndex) : '';
+        name = name
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/[^a-z0-9]/gi, '_')
+            .replace(/_{2,}/g, '_')
+            .toLowerCase();
+        return `${name}${ext.toLowerCase()}`;
+    }
 
     async register(userData) {
         try {
@@ -490,8 +507,7 @@ class SupabaseService {
                         const path = [leaf.name];
                         let current = leaf;
                         while (current?.parent_id) {
-                            const parentId = current.parent_id;
-                            const parent = this.categoriesCache.find(c => c.id === parentId);
+                            const parent = this.categoriesCache.find(c => c.id === current.parent_id);
                             if (parent) {
                                 path.unshift(parent.name);
                                 current = parent;
@@ -553,8 +569,7 @@ class SupabaseService {
                     const path = [leaf.name];
                     let current = leaf;
                     while (current?.parent_id) {
-                        const parentId = current.parent_id;
-                        const parent = this.categoriesCache.find(c => c.id === parentId);
+                        const parent = this.categoriesCache.find(c => c.id === current.parent_id);
                         if (parent) {
                             path.unshift(parent.name);
                             current = parent;
@@ -618,7 +633,7 @@ class SupabaseService {
                     name,
                     description,
                     price,
-                    category_id: category_id || null,
+                    category_id,
                     seo_title: name,
                     seo_description: description
                 }])
@@ -645,12 +660,13 @@ class SupabaseService {
             const imageUrls = [];
             for (let i = 0; i < imageFiles.length; i++) {
                 const file = imageFiles[i];
-                const fileName = `${product.id}/${Date.now()}_${i}_${file.name}`;
+                const sanitizedName = this.sanitizeFileName(file.name);
+                const fileName = `${product.id}/${Date.now()}_${i}_${sanitizedName}`;
 
                 const imageData = await uploadImage(file, fileName);
                 const publicUrl = getPublicImageUrl(imageData.path);
 
-                // Créer l'entrée dans product_images (URL publique complète)
+                // Créer l'entrée dans product_images (URL publique complète pour l'app mobile)
                 const { error: imageError } = await supabase
                     .from('product_images')
                     .insert([{
@@ -698,7 +714,7 @@ class SupabaseService {
                     name,
                     description,
                     price,
-                    category_id: category_id || null,
+                    category_id,
                     seo_title: name,
                     seo_description: description,
                     updated_at: new Date().toISOString()
@@ -735,7 +751,7 @@ class SupabaseService {
 
             if (oldImages) {
                 for (const img of oldImages) {
-                    // Extraire le chemin relatif si URL complète
+                    // Extraire le chemin relatif si l'URL est complète
                     let storagePath = img.url;
                     if (img.url && img.url.startsWith('http')) {
                         const marker = '/product-images/';
@@ -755,7 +771,8 @@ class SupabaseService {
             const imageUrls = [];
             for (let i = 0; i < newImageFiles.length; i++) {
                 const file = newImageFiles[i];
-                const fileName = `${id}/${Date.now()}_${i}_${file.name}`;
+                const sanitizedName = this.sanitizeFileName(file.name);
+                const fileName = `${id}/${Date.now()}_${i}_${sanitizedName}`;
 
                 const imageData = await uploadImage(file, fileName);
                 const publicUrl = getPublicImageUrl(imageData.path);
@@ -796,7 +813,7 @@ class SupabaseService {
 
             if (images) {
                 for (const img of images) {
-                    // Extraire le chemin relatif si URL complète
+                    // Extraire le chemin relatif si l'URL est complète
                     let storagePath = img.url;
                     if (img.url && img.url.startsWith('http')) {
                         const marker = '/product-images/';

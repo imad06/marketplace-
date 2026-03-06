@@ -4,7 +4,7 @@ import Input from '../common/Input';
 import Button from '../common/Button';
 import { X, AlertCircle, Trash2, Upload } from 'lucide-react';
 import { getPublicImageUrl } from '../../config/supabase.config';
-import { STORE_TYPE_LABELS } from '../../utils/constants';
+import { PRODUCT_CATEGORIES, STORE_TYPE_LABELS } from '../../utils/constants';
 import { useAuth } from '../../hooks/useAuth';
 import supabaseService from '../../services/supabase.service';
 
@@ -80,7 +80,7 @@ const ProductForm = ({ product, onSubmit, onCancel, loading }) => {
         const parts = product.category.split(' > ');
         if (parts.length === 3) {
           const typeId = Object.keys(STORE_TYPE_LABELS).find(k => STORE_TYPE_LABELS[k] === parts[0]);
-          const group = dbCategories.find(c => c.name === parts[1] && !c.parent_id && String(c.store_type_id) === String(typeId));
+          const group = dbCategories.find(c => c.name === parts[1] && !c.parent_id && c.store_type_id == typeId);
           const item = dbCategories.find(c => c.name === parts[2] && c.parent_id === group?.id);
 
           setSelection({
@@ -425,7 +425,7 @@ const ProductForm = ({ product, onSubmit, onCancel, loading }) => {
                       >
                         <option value="">-- Choisir --</option>
                         {(() => {
-                          const groups = dbCategories.filter(c => !c.parent_id && String(c.store_type_id) === String(selection.typeId));
+                          const groups = dbCategories.filter(c => !c.parent_id && c.store_type_id == selection.typeId);
                           // Déduplication par nom
                           const uniqueGroups = Array.from(new Map(groups.map(c => [c.name, c])).values());
 
