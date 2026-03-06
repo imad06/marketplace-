@@ -43,7 +43,7 @@ const OrderList = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [currentShop]);
 
   useEffect(() => {
     fetchOrders();

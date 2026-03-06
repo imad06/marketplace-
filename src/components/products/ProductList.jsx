@@ -46,7 +46,7 @@ const ProductList = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [currentShop]);
 
   useEffect(() => {
     fetchProducts();

@@ -490,7 +490,8 @@ class SupabaseService {
                         const path = [leaf.name];
                         let current = leaf;
                         while (current?.parent_id) {
-                            const parent = this.categoriesCache.find(c => c.id === current.parent_id);
+                            const parentId = current.parent_id;
+                            const parent = this.categoriesCache.find(c => c.id === parentId);
                             if (parent) {
                                 path.unshift(parent.name);
                                 current = parent;
@@ -552,7 +553,8 @@ class SupabaseService {
                     const path = [leaf.name];
                     let current = leaf;
                     while (current?.parent_id) {
-                        const parent = this.categoriesCache.find(c => c.id === current.parent_id);
+                        const parentId = current.parent_id;
+                        const parent = this.categoriesCache.find(c => c.id === parentId);
                         if (parent) {
                             path.unshift(parent.name);
                             current = parent;
